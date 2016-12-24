@@ -1,0 +1,36 @@
+# .gitconfigure (Luis Veliz)
+
+[user]
+ name = Luis Veliz               # 'Autor' de los commit
+ email = l.veliz@live.com        # Correo del autor
+
+[web]
+ browser = chromium              # Navegador predeterminado (para Git)
+
+[github]
+ user =                          # ...
+ token =                         # ...
+
+[credential]
+ helper = cache --timeout=7200   # Tiempo de duración de credenciales (duran 2h)
+
+[core]
+ editor = vim                    # Editor de texto predeterminado (para Git)
+ pager = less                    # Páginador predeterminado (para Git)
+ excludefiles = ~/.gitignore     # Archivo con lista de elementos que deben ser ignorados
+
+[help]
+ autocorrect = 20                # Corrector de comandos mal escritos
+
+[commit]
+ template = ~/.gitmessage        # Archivo que contiene formato del mensaje del 'commit'
+
+[push]
+ default = simple                # Solo 'presiona' la rama actual (matching 'presiona' todas las ramas)
+
+[alias]
+ caam = commit -a --amend -m     # Commit con el mismo nombre que agrega todos los archivos
+ pf = push --force               # 'Presiona' de manera forzada los cambios
+ logline = log --oneline         # Muestra los 'commits' de manera resumida
+ logaut = log --author=          # Muestra los 'commits' por autor
+

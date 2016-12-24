@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Copyright 2016 Luis Veliz
+# <a href="mailto:l.veliz@live.com>Enviar Correo</a>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+if [ $( echo $EUID ) -ne 0 ]; then
+    echo 'Debes ejecutar el script como superusuario'; exit 1
+fi
+
+    # Detener el servicio
+    systemctl stop ${servicio:=httpd.service}
+
+    # Crear backup del archivo
+    [ -e ${archivo:=/etc/httpd/conf/httpd.conf} ] && (rm -rf ${archivo}.bak; cp $archivo ${archivo}.bak)
+
+    # Modificar el archivo
+    echo -e "\nLoadModule php7_module modules/libphp7.so\nInclude conf/extra/php7_module.conf\nAddHandler php7-script php" >> $archivo
+    sed -i '/mod_mpm_event.so$/ s/^/#&/ ; /mod_mpm_prefork.so$/ s/#//' $archivo
+
+    # Crear archivo de prueba
+    echo '<?php phpInfo();' > ${archivo2:=/srv/http/index.php}
+
+    # Iniciar el servicio
+    systemctl start $servicio
+  
+    # Comprobar funcionalidad
+    echo 'Abre tu navegador e ingresa a localhost' 
+

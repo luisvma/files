@@ -1,0 +1,19 @@
+# .gitignore (Luis Veliz)
+
+# Código compilado
+ .class
+
+# Archivos temporales (de respaldo)
+ .swp
+ .swo
+#~
+
+# Archivos comprimidos
+ .7z
+ .gz
+ .iso
+ .jar
+ .rar
+ .tar
+ .zip
+
